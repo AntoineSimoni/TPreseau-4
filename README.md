@@ -195,7 +195,8 @@ On affiche la table ARP :
     224.0.0.252           01-00-5e-00-00-fc     statique
     239.255.255.250       01-00-5e-7f-ff-fa     statique
 ```
-On supprime la table : ``` C:\WINDOWS\system32>arp -a
+On la suppprime : 
+``` C:\WINDOWS\system32>arp -a
     Interface : 192.168.56.1 --- 0x7
     Adresse Internet      Adresse physique      Type
     224.0.0.22            01-00-5e-00-00-16     statique
@@ -219,7 +220,8 @@ On supprime la table : ``` C:\WINDOWS\system32>arp -a
     Adresse Internet      Adresse physique      Type
     224.0.0.22            01-00-5e-00-00-16     statique
 ```
-On l'affiche de nouveau : ``` C:\WINDOWS\system32>arp -a
+On la re affiche
+``` C:\WINDOWS\system32>arp -a
     Interface : 192.168.56.1 --- 0x7
     Adresse Internet      Adresse physique      Type
     192.168.56.255        ff-ff-ff-ff-ff-ff     statique
