@@ -243,6 +243,7 @@ Donc sur le routeur si vous n'avez pas tcpdump (comme moa :c) il faut le downloa
 
 
 * A. Interception d'ARP et ping
+
 Router1 : 
 ```sudo tcpdump -i enp0s9 -w ping.pcap``` Qui effectue un ping entre les 2 autres
 ```python2 -m SimpleHTTPServer 8888``` On récupère un dossier .pcap 
