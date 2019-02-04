@@ -15,38 +15,50 @@ client1 ssh user@10.1.0.10
 server1 ssh user@10.2.0.10 
 router1 ssh user@10.1.0.254 
  Définition du nom de domaine
+```
 [user@client1 ~]$ hostname --fqdn client1 
 [user@routeur1 ~]$ hostname --fqdn routeur1.tp4
 [user@server1 ~]$ hostname --fqdn server1
+```
  Remplissage du fichier /etc/hosts
+ ```
 client1 :
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 10.2.0.10 server1 server1.tp4
 10.1.0.254 router1 router1.tp4 
+```
+```
 server1 :
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 10.1.0.10 client1 client1.tp4
 10.2.0.254 router1 router1.tp4
+```
+```
 router1 :
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 10.2.0.10 server1 server1.tp4
 10.1.0.10 client1 client1.tp4
+```
+
  client1 ping router 1
+ ```
 [user@client1 ~]$ ping router1
 PING router1 (10.1.0.254) 56(84) bytes of data.
 64 bytes from router1 (10.1.0.254): icmp_seq=1 ttl=64 time=0.720 ms
 64 bytes from router1 (10.1.0.254): icmp_seq=2 ttl=64 time=0.769 ms
 64 bytes from router1 (10.1.0.254): icmp_seq=3 ttl=64 time=0.858 ms
 64 bytes from router1 (10.1.0.254): icmp_seq=4 ttl=64 time=0.734 ms
-^C
+```
+
+
 --- router1 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3009ms
 rtt min/avg/max/mdev = 0.720/0.770/0.858/0.057 ms
  server1 ping router1
-[user@server1 ~]$ ping router1
+[user@server1 ~]$ ping router 1
 PING router1 (10.2.0.254) 56(84) bytes of data.
 64 bytes from router1 (10.2.0.254): icmp_seq=1 ttl=64 time=1.19 ms
 64 bytes from router1 (10.2.0.254): icmp_seq=2 ttl=64 time=0.854 ms
