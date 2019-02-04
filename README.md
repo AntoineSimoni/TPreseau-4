@@ -145,7 +145,8 @@ router1 :
     10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a REACHABLE
 ```
 C. Manip 3
-On affiche la table ARP ``` C:\Users\system32>arp -a
+On affiche la table ARP :
+``` C:\Users\system32>arp -a
     Interface : 192.168.56.1 --- 0x7
     Adresse Internet      Adresse physique      Type
     192.168.56.255        ff-ff-ff-ff-ff-ff     statique
