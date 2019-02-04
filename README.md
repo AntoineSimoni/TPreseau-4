@@ -2,30 +2,6 @@ TP4 - Routage Statique
 I. Mise en place du lab
 Mise en place faites de mon coté, ainsi que rename des hosts
 
- Remplissage du fichier /etc/hosts
-```
-client1 :
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.2.0.10 serveur1 serveur
-10.1.0.254 routeur1 routeur
-```
-```
-serveur1 :
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.1.0.10 client1 client
-10.2.0.254 routeur1 routeur
-```
-```
-routeur1 :
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.2.0.10 serveur1 serveur
-10.1.0.10 client1 client
-```
- client1 ping routeur 1
-```
 [user@client1 ~]$ ping routeur1
 PING routeur1 (10.1.0.254) 56(84) bytes of data.
 64 bytes from routeur1 (10.1.0.254): icmp_seq=1 ttl=64 time=0.720 ms
@@ -49,7 +25,7 @@ PING routeur1 (10.2.0.254) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3004ms
 rtt min/avg/max/mdev = 0.375/0.720/1.193/0.327 ms
 ```
-3. Mise en lace du routage statique
+3. Mise en place du routage statique
 Routeur1
 ```
 [user@routeur1 ~]$ ip route
