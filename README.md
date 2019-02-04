@@ -1,6 +1,8 @@
 TP4 - Routage Statique
+
 I. Mise en place du lab
-Mise en place faites de mon coté, ainsi que rename des hosts
+
+* Mise en place faites de mon coté, ainsi que rename des hosts
 ```
 [user@client1 ~]$ ping routeur1
 PING routeur1 (10.1.0.254) 56(84) bytes of data.
