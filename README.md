@@ -65,26 +65,33 @@ PING router1 (10.2.0.254) 56(84) bytes of data.
 64 bytes from router1 (10.2.0.254): icmp_seq=3 ttl=64 time=0.458 ms
 64 bytes from router1 (10.2.0.254): icmp_seq=4 ttl=64 time=0.375 ms
 ^C
---- router1 ping statistics ---
+--- Routeur1 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3004ms
 rtt min/avg/max/mdev = 0.375/0.720/1.193/0.327 ms
-3. Mise en lace du routage statique
-Router1
+3. Mise en place du routage statique
+Routeur1
+```
 [user@routeur1 ~]$ ip route
 10.1.0.0/24 dev enp0s8 proto kernel scope link src 10.1.0.254 metric 100
 10.2.0.0/24 dev enp0s9 proto kernel scope link src 10.2.0.254 metric 101
+```
 client1
+```
 [user@client1 ~]$ ip route show
 10.1.0.0/24 dev enp0s8 proto kernel scope link src 10.1.0.10 metric 100
 10.2.0.0/24 via 10.2.0.254 dev enp0s8 proto static metric 100
 10.2.0.254 dev enp0s8 proto static scope link metric 100
+```
 server1
+```
 [user@server1 ~]$ ip route show
 10.1.0.0/24 via 10.1.0.254 dev enp0s8 proto static metric 100
 10.1.0.254 dev enp0s8 proto static scope link metric 100
 10.2.0.0/24 dev enp0s8 proto kernel scope link src 10.2.0.10 metric 100
-test
+```
+
 client1 ping server1
+```
     [user@client1 ~]$ ping server1
     PING server1 (10.2.0.10) 56(84) bytes of data.
     64 bytes from server1 (10.2.0.10): icmp_seq=1 ttl=63 time=0.778 ms
@@ -94,7 +101,9 @@ client1 ping server1
     --- server1 ping statistics ---
     3 packets transmitted, 3 received, 0% packet loss, time 2002ms
     rtt min/avg/max/mdev = 0.778/1.195/1.411/0.298 ms 
+```
 server1 ping client1
+```
     [user@server1 ~]$ ping client1
     PING client1 (10.1.0.10) 56(84) bytes of data.
     64 bytes from client1 (10.1.0.10): icmp_seq=1 ttl=63 time=0.794 ms
@@ -105,11 +114,14 @@ server1 ping client1
     --- client1 ping statistics ---
     4 packets transmitted, 4 received, 0% packet loss, time 3005ms
     rtt min/avg/max/mdev = 0.794/1.252/1.471/0.271 ms
+``
 traceroute depuis client1 :
+```
     [user@client1 ~]$ traceroute server1
     traceroute to server1 (10.2.0.10), 30 hops max, 60 byte packets
     1  router1 (10.1.0.254)  0.316 ms  0.183 ms  0.170 ms
     2  server1 (10.2.0.10)  0.434 ms !X  0.500 ms !X  0.522 ms !X
+    ```
 II Spéléologie réseau
 1. ARP
 A. Manip 1
