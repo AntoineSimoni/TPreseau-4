@@ -1,6 +1,8 @@
-TP4 - Routage Statique
+TP4 - Spéléologie réseau : descente dans les couches
 
-I. Mise en place du lab
+1. Mise en place générale
+&
+2. Création des VM
 
 * Mise en place faites de mon coté, ainsi que rename des hosts
 ```
