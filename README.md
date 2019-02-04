@@ -129,25 +129,21 @@ server1 :
     [user@server1 ~]$ ip neigh show
     10.2.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1b REACHABLE
 ```
-client1 ping server1 ``` [user@client1 ~]$ ip neigh show 10.1.0.254 dev enp0s8 lladdr 08:00:27:26:4b:c5 STALE 10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a REACHABLE 10.2.0.254 dev enp0s8 lladdr 08:00:27:26:4b:c5 REACHABLE ```
+client1 ping server1 
+``` [user@client1 ~]$ ip neigh show 10.1.0.254 dev enp0s8 lladdr 08:00:27:26:4b:c5 STALE 10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a REACHABLE 10.2.0.254 dev enp0s8 lladdr 08:00:27:26:4b:c5 REACHABLE ```
 
-Le changement est dû au ping qui envoie un protocole ARP pour récupérer les adresses MAC sur server1
 ```
     [user@server1 ~]$ ip neigh show
     10.1.0.254 dev enp0s8 lladdr 08:00:27:1c:5c:be STALE
     10.2.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1b DELAY
     10.2.0.254 dev enp0s8 lladdr 08:00:27:1c:5c:be STALE
 ```
-Le changement est dû à la réponse du ping ("pong") qui envoie un protocole ARP pour récupérer les adresses MAC
-B. Manip 2
 Check
 router1 :
 ```
     [user@routeur1 ~]$ ip neigh show
     10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a REACHABLE
 ```
-La seule ligne visible est la connexion avec notre ordinateur en SSH sur la carte ayant comme IP 10.1.0.254 3. Check 4. router1 [user@routeur1 ~]$ ip neigh show 10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a DELAY 10.2.0.10 dev enp0s9 lladdr 08:00:27:89:17:80 STALE 10.1.0.10 dev enp0s8 lladdr 08:00:27:03:d0:93 STALE
-Les changements sont dues au protocole ARP demandant la MAC du client1 et du server1
 C. Manip 3
 On affiche la table ARP ``` C:\Users\system32>arp -a
     Interface : 192.168.56.1 --- 0x7
