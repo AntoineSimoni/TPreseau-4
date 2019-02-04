@@ -1,70 +1,56 @@
 TP4 - Routage Statique
 I. Mise en place du lab
-1. Création des réseaux
-Création de deux cartes réseau ayant comme IP : 10.1.0.1 et 10.2.0.1 sans serveur DHCP.
-2. Création des VMs
-On clone 3 VMs depuis la VM patron.
- Désactiver SELinux (fait sur le patron)
- Installation de certains paquets dans le patron (fait sur le patron)
- Désactivation de la carte NAT (fait sur le patron)
- Définition des IPs statiques
- Connexion SSH
-client1 ssh user@10.1.0.10 
-server1 ssh user@10.2.0.10 
-router1 ssh user@10.1.0.254 
- Définition du nom de domaine
-[user@client1 ~]$ hostname --fqdn client1 
-[user@routeur1 ~]$ hostname --fqdn routeur1.tp4
-[user@server1 ~]$ hostname --fqdn server1
+Mise en place faites de mon coté, ainsi que rename des hosts
+
  Remplissage du fichier /etc/hosts
 ```
 client1 :
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.2.0.10 server1 server1.tp4
-10.1.0.254 router1 router1.tp4 
+10.2.0.10 serveur1 serveur
+10.1.0.254 routeur1 routeur
 ```
 ```
-server1 :
+serveur1 :
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.1.0.10 client1 client1.tp4
-10.2.0.254 router1 router1.tp4
+10.1.0.10 client1 client
+10.2.0.254 routeur1 routeur
 ```
 ```
-router1 :
+routeur1 :
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-10.2.0.10 server1 server1.tp4
-10.1.0.10 client1 client1.tp4
+10.2.0.10 serveur1 serveur
+10.1.0.10 client1 client
 ```
- client1 ping router 1
+ client1 ping routeur 1
 ```
-[user@client1 ~]$ ping router1
-PING router1 (10.1.0.254) 56(84) bytes of data.
-64 bytes from router1 (10.1.0.254): icmp_seq=1 ttl=64 time=0.720 ms
-64 bytes from router1 (10.1.0.254): icmp_seq=2 ttl=64 time=0.769 ms
-64 bytes from router1 (10.1.0.254): icmp_seq=3 ttl=64 time=0.858 ms
-64 bytes from router1 (10.1.0.254): icmp_seq=4 ttl=64 time=0.734 ms
---- router1 ping statistics ---
+[user@client1 ~]$ ping routeur1
+PING routeur1 (10.1.0.254) 56(84) bytes of data.
+64 bytes from routeur1 (10.1.0.254): icmp_seq=1 ttl=64 time=0.720 ms
+64 bytes from routeur1 (10.1.0.254): icmp_seq=2 ttl=64 time=0.769 ms
+64 bytes from routeur1 (10.1.0.254): icmp_seq=3 ttl=64 time=0.858 ms
+64 bytes from routeur1 (10.1.0.254): icmp_seq=4 ttl=64 time=0.734 ms
+--- routeur1 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3009ms
 rtt min/avg/max/mdev = 0.720/0.770/0.858/0.057 ms
 ```
- server1 ping router1
+ serveur1 ping routeur1
  ```
-[user@server1 ~]$ ping router1
-PING router1 (10.2.0.254) 56(84) bytes of data.
-64 bytes from router1 (10.2.0.254): icmp_seq=1 ttl=64 time=1.19 ms
-64 bytes from router1 (10.2.0.254): icmp_seq=2 ttl=64 time=0.854 ms
-64 bytes from router1 (10.2.0.254): icmp_seq=3 ttl=64 time=0.458 ms
-64 bytes from router1 (10.2.0.254): icmp_seq=4 ttl=64 time=0.375 ms
+[user@serveur1 ~]$ ping routeur1
+PING routeur1 (10.2.0.254) 56(84) bytes of data.
+64 bytes from routeur1 (10.2.0.254): icmp_seq=1 ttl=64 time=1.19 ms
+64 bytes from routeur1 (10.2.0.254): icmp_seq=2 ttl=64 time=0.854 ms
+64 bytes from routeur1 (10.2.0.254): icmp_seq=3 ttl=64 time=0.458 ms
+64 bytes from routeur1 (10.2.0.254): icmp_seq=4 ttl=64 time=0.375 ms
 ^C
---- router1 ping statistics ---
+--- routeur1 ping statistics ---
 4 packets transmitted, 4 received, 0% packet loss, time 3004ms
 rtt min/avg/max/mdev = 0.375/0.720/1.193/0.327 ms
 ```
 3. Mise en lace du routage statique
-Router1
+Routeur1
 ```
 [user@routeur1 ~]$ ip route
 10.1.0.0/24 dev enp0s8 proto kernel scope link src 10.1.0.254 metric 100
@@ -77,28 +63,28 @@ client1
 10.2.0.0/24 via 10.2.0.254 dev enp0s8 proto static metric 100
 10.2.0.254 dev enp0s8 proto static scope link metric 100
 ```
-server1
+serveur1
 ```
-[user@server1 ~]$ ip route show
+[user@serveur1 ~]$ ip route show
 10.1.0.0/24 via 10.1.0.254 dev enp0s8 proto static metric 100
 10.1.0.254 dev enp0s8 proto static scope link metric 100
 10.2.0.0/24 dev enp0s8 proto kernel scope link src 10.2.0.10 metric 100
 ```
-client1 ping server1
+client1 ping serveur1
 ```
-    [user@client1 ~]$ ping server1
-    PING server1 (10.2.0.10) 56(84) bytes of data.
-    64 bytes from server1 (10.2.0.10): icmp_seq=1 ttl=63 time=0.778 ms
-    64 bytes from server1 (10.2.0.10): icmp_seq=2 ttl=63 time=1.41 ms
-    64 bytes from server1 (10.2.0.10): icmp_seq=3 ttl=63 time=1.39 ms
+    [user@client1 ~]$ ping serveur1
+    PING serveur1 (10.2.0.10) 56(84) bytes of data.
+    64 bytes from serveur1 (10.2.0.10): icmp_seq=1 ttl=63 time=0.778 ms
+    64 bytes from servur1 (10.2.0.10): icmp_seq=2 ttl=63 time=1.41 ms
+    64 bytes from serveur1 (10.2.0.10): icmp_seq=3 ttl=63 time=1.39 ms
     ^C
-    --- server1 ping statistics ---
+    --- serveur1 ping statistics ---
     3 packets transmitted, 3 received, 0% packet loss, time 2002ms
     rtt min/avg/max/mdev = 0.778/1.195/1.411/0.298 ms 
 ```
-server1 ping client1
+serveur1 ping client1
 ```
-    [user@server1 ~]$ ping client1
+    [user@serveur1 ~]$ ping client1
     PING client1 (10.1.0.10) 56(84) bytes of data.
     64 bytes from client1 (10.1.0.10): icmp_seq=1 ttl=63 time=0.794 ms
     64 bytes from client1 (10.1.0.10): icmp_seq=2 ttl=63 time=1.43 ms
@@ -111,10 +97,10 @@ server1 ping client1
 ```
 traceroute depuis client1 :
 ```
-    [user@client1 ~]$ traceroute server1
-    traceroute to server1 (10.2.0.10), 30 hops max, 60 byte packets
-    1  router1 (10.1.0.254)  0.316 ms  0.183 ms  0.170 ms
-    2  server1 (10.2.0.10)  0.434 ms !X  0.500 ms !X  0.522 ms !X
+    [user@client1 ~]$ traceroute serveur1
+    traceroute to serveur1 (10.2.0.10), 30 hops max, 60 byte packets
+    1  routeur1 (10.1.0.254)  0.316 ms  0.183 ms  0.170 ms
+    2  serveur1 (10.2.0.10)  0.434 ms !X  0.500 ms !X  0.522 ms !X
 ```
 II Spéléologie réseau
 1. ARP
@@ -124,22 +110,22 @@ client1 :
     [user@client1 ~]$ ip neigh show
     10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a DELAY
 ```
-server1 : 
+serveur1 : 
 ```
-    [user@server1 ~]$ ip neigh show
+    [user@serveur1 ~]$ ip neigh show
     10.2.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1b REACHABLE
-```
-client1 ping server1 
+```u
+client1 ping serveur1 
 ``` [user@client1 ~]$ ip neigh show 10.1.0.254 dev enp0s8 lladdr 08:00:27:26:4b:c5 STALE 10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a REACHABLE 10.2.0.254 dev enp0s8 lladdr 08:00:27:26:4b:c5 REACHABLE ```
 
 ```
-    [user@server1 ~]$ ip neigh show
+    [user@serveur1 ~]$ ip neigh show
     10.1.0.254 dev enp0s8 lladdr 08:00:27:1c:5c:be STALE
     10.2.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1b DELAY
     10.2.0.254 dev enp0s8 lladdr 08:00:27:1c:5c:be STALE
 ```
 Check
-router1 :
+routeur1 :
 ```
     [user@routeur1 ~]$ ip neigh show
     10.1.0.1 dev enp0s8 lladdr 0a:00:27:00:00:1a REACHABLE
