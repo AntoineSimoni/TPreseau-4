@@ -1,7 +1,8 @@
 # TP4 - Spéléologie réseau : descente dans les couches
 
-1. Mise en place générale
-2. Création des VM
+## I. Mise en place du lab
+### 1. Créations des réseaux
+### 2. Création des VM
 
 * Mise en place faites de mon coté, ainsi que rename des hosts
 ```
@@ -28,7 +29,7 @@ PING routeur1 (10.2.0.254) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3004ms
 rtt min/avg/max/mdev = 0.375/0.720/1.193/0.327 ms
 ```
-3. Mise en place du routage statique
+### 3. Mise en place du routage statique
 Routeur1
 ```
 [user@routeur1 ~]$ ip route
@@ -81,8 +82,8 @@ traceroute depuis client1 :
     1  routeur1 (10.1.0.254)  0.316 ms  0.183 ms  0.170 ms
     2  serveur1 (10.2.0.10)  0.434 ms !X  0.500 ms !X  0.522 ms !X
 ```
-II Spéléologie réseau
-1. ARP
+## II Spéléologie réseau
+### 1. ARP
 A. Manip 1
 client1 :
 ```
